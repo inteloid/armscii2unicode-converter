@@ -12,6 +12,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.build.directory>target</project.build.directory>
+    <project.build.outputDirectory>target/classes</project.build.outputDirectory>
   </properties>
 
   <dependencies>
