@@ -59,17 +59,15 @@ public class ANSIUnicodeConverter {
 
     public String convert() {
         output = new StringBuffer();
+        List<Integer> from = direction ==  ANSI2UNICODE ? ascii : unicode;
+        List<Integer> to = direction ==  ANSI2UNICODE ? unicode : ascii;
+        int currentDestChar;
+
         for(int i = 0; i < input.length(); i++) {
             int currentSrcChar = input.charAt(i);
-            int currentDestChar;
             try {
-                if(direction == ANSI2UNICODE) {
-                    int index = ascii.indexOf(currentSrcChar);
-                    currentDestChar = unicode.get(index);
-                } else {
-                    int index = unicode.indexOf(currentSrcChar);
-                    currentDestChar = ascii.get(index);
-                }
+                int index = from.indexOf(currentSrcChar);
+                currentDestChar = to.get(index);
             } catch (ArrayIndexOutOfBoundsException oobe) {
                 currentDestChar = currentSrcChar;
             }
