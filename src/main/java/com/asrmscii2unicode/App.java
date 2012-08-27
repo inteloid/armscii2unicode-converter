@@ -8,8 +8,8 @@ import java.util.List;
  * Main entry point of application
  */
 public class App {
-    public static void main(String[] args) throws Exception {
-        if (args.length == 2) {
+    public static void main(String[] args) {
+        if(System.console() != null) {
             try {
                 File inputFile = new File(args[0]);
                 File outputFile = new File(args[0]);
