@@ -61,21 +61,23 @@ public class MainFrame extends JDialog {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.showDialog(this, "Choose a file");
         File file = fileChooser.getSelectedFile();
+        
+        if(chooserBtn == btnInput) {
+            inputFile = file;
+        } else {
+            outputFile = file;
+        }
         if(file != null) {
             chooserBtn.setText(file.getAbsolutePath());
-            if(chooserBtn == btnInput) {
-                inputFile = file;
-            } else {
-                outputFile = file;
-            }
-        } else {
-            chooserBtn.setText("");
         }
     }
 
     private void onOK() {
         try {
             InputStream in = new FileInputStream(inputFile);
+            if(outputFile == null) {
+                outputFile = new File(inputFile.getAbsolutePath() + "_");
+            }
             OutputStream out = new FileOutputStream(outputFile);
 
             ANSIUnicodeConverter converter = new ANSIUnicodeConverter();
