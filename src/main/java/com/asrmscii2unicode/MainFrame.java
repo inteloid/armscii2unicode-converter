@@ -81,7 +81,7 @@ public class MainFrame extends JDialog {
             OutputStream out = new FileOutputStream(outputFile);
 
             ANSIUnicodeConverter converter = new ANSIUnicodeConverter();
-            converter.setDirection(ANSIUnicodeConverter.ANSI2UNICODE);
+            // converter.setDirection(ANSIUnicodeConverter.ANSI2UNICODE);
             StringBuffer output = new StringBuffer();
 
             final int BUFFER_SIZE = 1024 * 1024; // 1M
@@ -94,9 +94,9 @@ public class MainFrame extends JDialog {
                 }
                 in.read(buffer, currentPosition, currentBufferSize);
                 currentBufferSize = currentBufferSize + currentBufferSize;
-                converter.setInput(new String(buffer));
+                // converter.setInput(new String(buffer));
 
-                out.write(converter.convert().getBytes());
+                // out.write(converter.convert().getBytes());
             }
 
             in.close();
