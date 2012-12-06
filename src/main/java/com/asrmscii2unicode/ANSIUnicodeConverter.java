@@ -4,37 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
- * User: inteloid
- * Date: 8/25/12
- * Time: 7:21 AM
- * To change this template use File | Settings | File Templates.
+ * @author inteloid (harut.martirosyan@gmail.com)
+ * @version 1.0
+ * Converts Armenian ASCII encoded Strings into UTF-8 and vice-versa.
  */
 public class ANSIUnicodeConverter {
-    private List<Integer> ascii;
-    private List<Integer> unicode;
-    
-    private String input;
-    private StringBuffer output;
-
-    private int direction;
+    private static final List<Integer> ascii;
+    private static final List<Integer> unicode;
     
     public static final int ANSI2UNICODE = 1;
     public static final int UNICODE2ANSI = 2;
     
-    public ANSIUnicodeConverter() {
-        init();
-    }
-    
-    private void init() {
+    static {
         ascii = new ArrayList<Integer>();
         unicode = new ArrayList<Integer>();
 
         for(int i = 178; i <= 252; i+=2){
-            ascii.add(i); //mecatar ascii
-            unicode.add(1328 + (i-176)/2); //mecatar unicode
-            ascii.add(i+1); //poqratar ascii
-            unicode.add(1376 + (i-176)/2); //poqratar unicode
+            ascii.add(i);                       //mecatar ascii
+            unicode.add(1328 + (i-176)/2);      //mecatar unicode
+            ascii.add(i+1);                     //poqratar ascii
+            unicode.add(1376 + (i-176)/2);      //poqratar unicode
         }
         ascii.add(168);		unicode.add(0x587);  //ev
 
@@ -57,13 +46,25 @@ public class ANSIUnicodeConverter {
         ascii.add(0,0);		unicode.add(0,0); //2 hat CUSTOM :)
     }
 
-    public String convert() {
-        output = new StringBuffer();
+    /**
+     * Does the actual conversion.
+     * @param input input string
+     * @param direction either ANSI2UNICODE or UNICODE2ANSI
+     * @return converted value
+     */
+    public String convert(final String input, int direction) {
+        StringBuffer output = new StringBuffer();
         List<Integer> from = direction ==  ANSI2UNICODE ? ascii : unicode;
         List<Integer> to = direction ==  ANSI2UNICODE ? unicode : ascii;
         int currentDestChar;
 
-        for(int i = 0; i < input.length(); i++) {
+        if(input == null) {
+            return null;
+        }
+
+        int length = input.length();
+
+        for(int i = 0; i < length; i++) {
             int currentSrcChar = input.charAt(i);
             try {
                 int index = from.indexOf(currentSrcChar);
@@ -74,31 +75,6 @@ public class ANSIUnicodeConverter {
             output.append((char)currentDestChar);
         }
 
-        return output.toString();
-    }
-    
-    public String convert(String input) {
-        setInput(input);
-        return convert();
-    }
-    
-    public int getDirection() {
-        return direction;
-    }
-
-    public void setDirection(int direction) {
-        this.direction = direction;
-    }
-
-    public String getInput() {
-        return input;
-    }
-
-    public void setInput(String input) {
-        this.input = input;
-    }
-
-    public String getOutput() {
         return output.toString();
     }
 }
