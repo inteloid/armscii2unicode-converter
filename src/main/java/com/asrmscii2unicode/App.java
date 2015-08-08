@@ -12,7 +12,7 @@ public class App {
         if(System.console() != null) {
             try {
                 File inputFile = new File(args[0]);
-                File outputFile = new File(args[0]);
+                File outputFile = new File(args[1]);
 
                 InputStream in = new FileInputStream(inputFile);
                 OutputStream out = new FileOutputStream(outputFile);
